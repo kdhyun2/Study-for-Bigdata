@@ -1,0 +1,49 @@
+from typing import KeysView
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import urllib.request
+import time
+
+url = "https://www.google.com/search?q=%EB%B6%88&sxsrf=ALeKk03rBaAOcet8WAQPPPAJwh_S8F93qA:1611121709152&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiFv6eJ6KnuAhWC62EKHU-FD7sQ_AUoAXoECBUQAw&biw=931&bih=719&dpr=1.25"
+browser = webdriver.Chrome()
+browser.get(url)
+
+SCROLL_PAUSE_TIME = 1
+# Get scroll height
+last_height = browser.execute_script("return document.body.scrollHeight")
+while True:
+    # Scroll down to bottom
+    browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    # Wait to load page
+    time.sleep(SCROLL_PAUSE_TIME)
+    # Calculate new scroll height and compare with last scroll height
+    new_height = browser.execute_script("return document.body.scrollHeight")
+    if new_height == last_height:
+        try:
+            browser.find_element_by_css_selector(".mye4qd").click()
+        except:
+            break
+    last_height = new_height
+
+images = browser.find_elements_by_css_selector(".rg_i.Q4LuWd")
+
+count =1 
+
+for image in images:
+    try:
+        if count <= 100:
+            image.click()
+            time.sleep(2)
+            imgUrl = browser.find_element_by_xpath('//*[@id="Sva75c"]/div/div/div[3]/div[2]/c-wiz/div[1]/div[1]/div/div[2]/a/img').get_attribute("src")
+            opener=urllib.request.build_opener()
+            opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36')]
+            urllib.request.install_opener(opener)
+            urllib.request.urlretrieve(imgUrl, str(count) + ".jpg")
+        else:
+            break
+
+        count = count + 1
+    except:
+        pass
+
+browser.close()

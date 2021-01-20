@@ -1,0 +1,45 @@
+import requests
+from bs4 import BeautifulSoup
+
+url = "https://comic.naver.com/index.nhn"
+res = requests.get(url)
+res.raise_for_status()
+
+soup = BeautifulSoup(res.text, "lxml")
+
+# print(soup.title) # 페이지의 타이틀 element 출력
+# print(soup.title.get_text()) # 페이지의 title Element 정보 출력
+# print(soup.a) # 페이지의 첫 a element 출력 
+# print(soup.a.attrs) # 페이지의 첫 a element 속성 정보 출력 
+# print(soup.a["href"]) # a element의 href 속성 "값" 정보를 출력
+
+# 대상에 대하여 모를때 사용할 수 있는  find
+
+# print(soup.find("a", attrs={"class":"Nbtn_upload"}))
+# print(soup.find(attrs={"class":"Nbtn_upload"})) 
+#하나밖에 없어서 나오지만 둘 이상인 경우 어떤 태그인지 적어줘야 한다.
+# 1. Class = "Nbtn_upload"인 a element 를 찾아줘
+# 2. Class = "Nbtn_upload"인 어떤 element 를 찾아줘
+
+# print(soup.find("li", attrs={"class":"rank01"}))
+# rank1 = soup.find("li", attrs={"class":"rank01"})
+# print(rank1.a)
+
+# print(rank1.next_sibling())
+# print(rank1.previous_sibling())
+# rank2 = rank1.find_next_sibling("li")
+# print(rank1.parent)
+
+# print(rank1.a.get_text())
+# rank2 = rank1.find_next_sibling("li")
+# print(rank2.a.get_text())
+# rank3 = rank2.find_next_sibling("li")
+# print(rank3.a.get_text())
+
+# print(rank3.find_previous_sibling("li").a.get_text())
+
+
+# print(rank1.find_next_sibling("li"))
+
+webtoon = soup.find("a", text="")
+

@@ -1,0 +1,16 @@
+from typing import KeysView
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+
+url = "https://www.google.com/search?q=%EB%B6%88&sxsrf=ALeKk03rBaAOcet8WAQPPPAJwh_S8F93qA:1611121709152&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiFv6eJ6KnuAhWC62EKHU-FD7sQ_AUoAXoECBUQAw&biw=931&bih=719&dpr=1.25"
+browser = webdriver.Chrome()
+browser.get(url)
+
+for i in range(100):
+    image_lst = browser.find_elements_by_css_selector("img.rg_i")[i]
+    image_lst.screenshot("C:/Users/Admin/Desktop/ws/asd" + str(i) + ".png")
+    
+
+
+

@@ -1,0 +1,34 @@
+import requests
+from bs4 import BeautifulSoup
+
+url = "https://comic.naver.com/webtoon/list.nhn?titleId=675554"
+res = requests.get(url)
+res.raise_for_status()
+
+soup = BeautifulSoup(res.text, "lxml")
+
+#gauss_indexs = soup.find_all("td", attrs={"class":"title"})
+
+# title = gauss_indexs[0].a.get_text()
+# print(title)
+# link = gauss_indexs[0].a["href"]
+# print("https://comic.naver.com" + link)
+
+# 링크 구하기
+# for gauss_index in gauss_indexs:
+#     title = gauss_index.a.get_text()
+#     link = "https://comic.naver.com" + gauss_index.a["href"]
+#     print(title, link)
+
+#평점 구하기
+total_rates = 0
+gauss_rates = soup.find_all("div", attrs={"class":"rating_type"})
+
+for gauss_rate in gauss_rates:
+    rate = gauss_rate.find("strong").get_text()
+    print(rate)
+    # 평균 구하는 과정 추가하기 
+    total_rates += float(rate)
+
+print("전체 점수 : ", total_rates)
+print("평균 점수 : ", total_rates / len(gauss_rates))

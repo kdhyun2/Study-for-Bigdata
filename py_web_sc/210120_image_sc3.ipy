@@ -1,0 +1,31 @@
+from typing import KeysView
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import urllib.request
+import time
+
+url = "https://search.naver.com/search.naver?where=image&sm=tab_jum&query=%EB%B6%88"
+
+opener=urllib.request.build_opener()
+opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36')]
+urllib.request.install_opener(opener)
+
+browser = webdriver.Chrome()
+browser.get(url)
+
+
+
+imgs = browser.find_elements_by_css_selector('img._listimage')
+
+result = []
+
+for idx, img in enumerate(imgs):
+
+    if 'http' in img.get_attribute('src'):
+        result.append(img.get_attribute('src'))
+    
+    urllib.request.urlretrieve(result[idx], str(idx) + ".jpg")
+    time.sleep(2)
+
+
+print('Colloections complete!')

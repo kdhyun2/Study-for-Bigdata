@@ -1,0 +1,21 @@
+from typing import KeysView
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+
+browser = webdriver.Chrome()
+
+browser.get("http://naver.com")
+
+elem = browser.find_element_by_class_name("link_login")
+elem.click()
+
+browser.find_element_by_id("id").send_keys("naver.id")
+browser.find_element_by_id("pw").send_keys("passwd")
+
+browser.find_element_by_id("log.login").click()
+
+browser.find_element_by_id("id").clear()
+browser.find_element_by_id("id").send_keys("my.id")
+# elem = browser.find_element_by_class_name("link_login")
+# elem.click()

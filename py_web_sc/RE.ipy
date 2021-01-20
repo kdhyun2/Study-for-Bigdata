@@ -1,0 +1,36 @@
+import re
+# 교통사고 번호반 외우기 
+# abcd, book, desk
+# 세개만 기억난다.
+# ca?e
+# care , cafe, case, cave등등일수 있다. 
+# caae, cabe, cace 등등 할수 있지만 정규식을 써본다.
+
+p = re.compile("ca.e") 
+# (ca.e) : .은 하나의 문자를 의미한다. > care, cafe, case | caffe
+# (^de) : ^은 문자열의 시작을 의미한다. > desk, destination(O) |  fade (X)
+# (se$) : $는 문자열의 끝을 의미한다. > case, base(O) | face (X)
+
+def print_match(m):
+    if m:
+        print("m.group()",m.group())
+        print("m.string",m.string) #입력받은 문자열
+        print("m.start",m.start()) # 일치하는 문자열의 시작  index
+        print("m.end()", m.end()) # 일치하는 문자열의 끝 index
+        print("m.span()",m.span()) # 일치하는 문자열의 시작/끝 index
+    else:
+        print("not match")
+
+# m = p.match("careless")
+# print_match(m)
+
+# m = p.search("good care")
+# print_match(m)
+# search 주어진 문자열 중에 일치하는것이 있으면 가능
+
+lst = p.findall("good care cafe")
+print(lst)
+# 해당하는 문자를 추출하여 리스트 형태로 저장 
+# 즉 findall은 문장 혹은 단어들의 모임에서 RE에 맞는 값을 모두 추출해 준다.
+# 
+#  

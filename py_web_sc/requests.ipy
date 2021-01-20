@@ -1,0 +1,18 @@
+import requests
+res = requests.get("http://google.com")
+#res = requests.get("http://nadocoding.tistory.com")
+print("응답코드 :", res.status_code)
+
+# if res.status_code == requests.codes.ok:
+#     print("정상입니다.")
+# else:
+#     print("문제가 생겼습니다. [에러 코드",res.status_code,"]")
+
+# res.raise_for_status()
+# 위 request.get 과 raise_for_status는 쌍으로 주로 사용한다. 
+# 403코드 같은 오류 발생시 오류를 밷고 프로그램 종료 한다. 
+
+print(len(res.text))
+
+with open("mygoogle.html", "w", encoding="utf8") as f:
+    f.write(res.text)
